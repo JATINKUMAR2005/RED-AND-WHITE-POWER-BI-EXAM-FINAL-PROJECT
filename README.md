@@ -242,7 +242,7 @@ This Power BI project provides a complete 360° analysis of student performance 
 
 ## 🧑‍💻 Author
 
-**Jaden**  
+**JATIN**  
 Power BI Analyst | Data Visualization Learner
 
 ---
