@@ -21,6 +21,7 @@ Using data modeling, DAX measures, visual analytics, drillthroughs, and tooltips
 
 ### **1. Students.csv**
 Contains student demographic information.
+
 | Column | Description |
 |--------|-------------|
 | StudentID | Unique ID for each student |
@@ -33,6 +34,7 @@ Contains student demographic information.
 
 ### **2. Scores.csv**
 Contains academic performance records.
+
 | Column | Description |
 |--------|-------------|
 | StudentID | Linked to Students table |
@@ -46,6 +48,7 @@ Contains academic performance records.
 
 ### **3. Attendance.csv**
 Tracks student daily attendance.
+
 | Column | Description |
 |--------|-------------|
 | StudentID | Linked to Students table |
@@ -57,6 +60,7 @@ Tracks student daily attendance.
 
 ### **4. Behavior.csv**
 Logs student behavior records.
+
 | Column | Description |
 |--------|-------------|
 | StudentID | Linked to Students table |
@@ -69,18 +73,14 @@ Logs student behavior records.
 ## 🔗 Data Model (Star Schema)
 
 The dashboard uses a **Star Schema** for optimal performance:
-
-markdown
-Copy code
+```
        STUDENTS (Dimension)
              │
  ┌───────────┼────────────┐
  │           │            │
-SCORES ATTENDANCE BEHAVIOR
-(Fact) (Fact) (Fact)
-
-yaml
-Copy code
+SCORES   ATTENDANCE   BEHAVIOR
+(Fact)     (Fact)      (Fact)
+```
 
 All fact tables are connected to **Students[StudentID]** using **1-to-Many** relationships.
 
@@ -91,35 +91,40 @@ All fact tables are connected to **Students[StudentID]** using **1-to-Many** rel
 ### **Total Students**
 ```DAX
 Total Students = DISTINCTCOUNT(Students[StudentID])
-Total Score
-DAX
-Copy code
+```
+
+### **Total Score**
+```DAX
 Total Score = SUM(Scores[Score])
-Total Max Score
-DAX
-Copy code
+```
+
+### **Total Max Score**
+```DAX
 Total Max Score = SUM(Scores[MaxScore])
-Percentage Score
-DAX
-Copy code
+```
+
+### **Percentage Score**
+```DAX
 Percentage Score = DIVIDE([Total Score], [Total Max Score], 0)
-Attendance Percentage
-DAX
-Copy code
+```
+
+### **Attendance Percentage**
+```DAX
 Attendance % =
 VAR TotalDays = COUNTROWS(Attendance)
 VAR PresentDays =
     CALCULATE(COUNTROWS(Attendance), Attendance[Status] = "Present")
 RETURN
 DIVIDE(PresentDays, TotalDays)
-Behavior Count per Type
-DAX
-Copy code
-Behavior Count =
-COUNTROWS(Behavior)
-Performance Category
-DAX
-Copy code
+```
+
+### **Behavior Count per Type**
+```DAX
+Behavior Count = COUNTROWS(Behavior)
+```
+
+### **Performance Category**
+```DAX
 Performance Category =
 SWITCH(
     TRUE(),
@@ -127,9 +132,10 @@ SWITCH(
     [Percentage Score] >= 0.50, "Medium",
     "Low"
 )
-Top Student Name
-DAX
-Copy code
+```
+
+### **Top Student Name**
+```DAX
 Top Student Name =
 VAR TopStudent =
     TOPN(
@@ -139,125 +145,130 @@ VAR TopStudent =
     )
 RETURN
 MAXX(TopStudent, Students[Name])
-📊 Visuals Included
-Dashboard Pages
-Overview Dashboard
-
-KPIs: Total Students, Avg Attendance, Avg Score
-
-Bar chart: Avg Score by Subject
-
-Donut: Behavior Type Distribution
-
-Table: Student Performance with Conditional Formatting
-
-Performance Analysis
-
-Line chart: Score trends by Term
-
-Bar chart: Class-wise performance
-
-Top N Student Ranking
-
-Attendance Insights
-
-Monthly attendance trend
-
-Attendance percentage by class
-
-High/low attendance indicators
-
-Behavior Analysis
-
-Behavior incidents distribution
-
-Top students with most behavior occurrences
-
-Student Drillthrough Page
-
-Student profile
-
-Score trend line
-
-Attendance trend
-
-Behavior history
-
-🎯 Tooltip Enhancements
-A custom tooltip page includes:
-
-Mini Score Trend (Line chart)
-
-Mini Attendance trend (Bar chart)
-
-Student name & key metrics
-
-This improves user interaction and provides quick insights on hover.
-
-🧭 Interactivity Features
-Drillthrough
-
-Tooltips
-
-Slicers (Class, Section, Subject, Term)
-
-Top N slider
-
-Dynamic ranking
-
-📐 Design Principles Used
-Clean and consistent layout
-
-Color-coded performance categories
-
-Minimal visual clutter
-
-High usability with navigation buttons
-
-Optimized for storytelling
-
-📌 Insights Summary
-Identifies high, medium, low performers
-
-Shows top subjects and weak subjects
-
-Highlights students with low attendance
-
-Tracks behavior trends and incident frequency
-
-Displays top-performing student with total score
-
-Helps teachers target students who need support
-
-🚀 How to Use
-Import the datasets into Power BI
-
-Build the relationships in Model View
-
-Create DAX measures listed above
-
-Add visuals and apply formatting
-
-Set up tooltip pages and drillthrough
-
-Publish to Power BI Service (optional)
-
-🏁 Conclusion
-This Power BI project provides a complete 360° analysis of student performance by integrating academic scores, attendance, and behavior. It helps educators and administrators make data-driven decisions to support student success.
-
-🧑‍💻 Author
-Jaden
-Power BI Analyst | Data Visualization Learner
-
-yaml
-Copy code
+```
 
 ---
 
-If you want, I can also create:
+## 📊 Visuals Included
 
-✔ A **project explanation PPT**  
-✔ A **video script for presentation**  
-✔ A **professional summary for your resume**  
+### Dashboard Pages
 
-Just tell me!
+#### **1. Overview Dashboard**
+- KPIs: Total Students, Avg Attendance, Avg Score
+- Bar chart: Avg Score by Subject
+- Donut: Behavior Type Distribution
+- Table: Student Performance with Conditional Formatting
+
+#### **2. Performance Analysis**
+- Line chart: Score trends by Term
+- Bar chart: Class-wise performance
+- Top N Student Ranking
+
+#### **3. Attendance Insights**
+- Monthly attendance trend
+- Attendance percentage by class
+- High/low attendance indicators
+
+#### **4. Behavior Analysis**
+- Behavior incidents distribution
+- Top students with most behavior occurrences
+
+#### **5. Student Drillthrough Page**
+- Student profile
+- Score trend line
+- Attendance trend
+- Behavior history
+
+---
+
+## 🎯 Tooltip Enhancements
+
+A custom tooltip page includes:
+- Mini Score Trend (Line chart)
+- Mini Attendance trend (Bar chart)
+- Student name & key metrics
+
+This improves user interaction and provides quick insights on hover.
+
+---
+
+## 🧭 Interactivity Features
+
+- **Drillthrough**
+- **Tooltips**
+- **Slicers** (Class, Section, Subject, Term)
+- **Top N slider**
+- **Dynamic ranking**
+
+---
+
+## 📐 Design Principles Used
+
+- Clean and consistent layout
+- Color-coded performance categories
+- Minimal visual clutter
+- High usability with navigation buttons
+- Optimized for storytelling
+
+---
+
+## 📌 Insights Summary
+
+- Identifies high, medium, low performers
+- Shows top subjects and weak subjects
+- Highlights students with low attendance
+- Tracks behavior trends and incident frequency
+- Displays top-performing student with total score
+- Helps teachers target students who need support
+
+---
+
+## 🚀 How to Use
+
+1. Import the datasets into Power BI
+2. Build the relationships in Model View
+3. Create DAX measures listed above
+4. Add visuals and apply formatting
+5. Set up tooltip pages and drillthrough
+6. Publish to Power BI Service (optional)
+
+---
+
+## 🏁 Conclusion
+
+This Power BI project provides a complete 360° analysis of student performance by integrating academic scores, attendance, and behavior. It helps educators and administrators make data-driven decisions to support student success.
+
+---
+
+## 🧑‍💻 Author
+
+**Jaden**  
+Power BI Analyst | Data Visualization Learner
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!  
+Feel free to check the [issues page](#).
+
+---
+
+## ⭐ Show Your Support
+
+If you found this project helpful, please give it a ⭐ on GitHub!
+
+---
+
+## 📧 Contact
+
+For questions or collaboration:
+- GitHub: [@YourUsername](#)
+- LinkedIn: [Your Profile](#)
+- Email: your.email@example.com
