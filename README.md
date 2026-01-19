@@ -2,7 +2,7 @@
 
 A complete Power BI project designed to analyze student performance using multiple datasets such as Scores, Attendance, Behavior, and Student demographics. This dashboard provides insights into academic performance, attendance trends, behavioral patterns, and identifies top-performing and at-risk students.
 
-Link for the published project : https://app.powerbi.com/links/3pXlpCwCh3?ctid=b9d20b82-a77c-4f11-af8b-0f3d179ad3c0&pbi_source=linkShare&bookmarkGuid=60b2ad7d-efef-4f92-a445-684403a1ef60
+Link for the published project : https://app.powerbi.com/links/WoJo0MRdJ4?ctid=b9d20b82-a77c-4f11-af8b-0f3d179ad3c0&pbi_source=linkShare
 
 ---
 
